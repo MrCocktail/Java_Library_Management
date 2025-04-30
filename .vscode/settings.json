@@ -1,0 +1,12 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\Mr. Cocktail\\Downloads\\2025J\\Java\\Program\\Java_Library_Management\\lib\\commons-lang-2.6.jar",
+        "c:\\Users\\Mr. Cocktail\\Downloads\\2025J\\Java\\Program\\Java_Library_Management\\lib\\commons-logging-1.1.3.jar",
+        "c:\\Users\\Mr. Cocktail\\Downloads\\2025J\\Java\\Program\\Java_Library_Management\\lib\\hsqldb.jar",
+        "c:\\Users\\Mr. Cocktail\\Downloads\\2025J\\Java\\Program\\Java_Library_Management\\lib\\jackcess-2.1.11.jar",
+        "c:\\Users\\Mr. Cocktail\\Downloads\\2025J\\Java\\Program\\Java_Library_Management\\lib\\ucanaccess-4.0.4.jar"
+    ]
+}
