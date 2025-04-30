@@ -8,6 +8,7 @@ public class Ouvrage {
     String edition; 
     int publish_year;
     String request;
+    String format = "| %-5s | %-25s | %-6s |\n";
 
     public Ouvrage() {
         // Initialize the connection here if needed
@@ -71,7 +72,6 @@ public class Ouvrage {
         String request = "SELECT * FROM Book";
     
         System.out.println("\nListe des ouvrages :\n");
-        String format = "| %-5s | %-25s | %-6s |\n";
         System.out.printf(format, "Ref", "Edition", "Année");
         System.out.println("----------------------------------------------");
     
@@ -100,10 +100,9 @@ public class Ouvrage {
         // con = Connexion.getConnection();
         System.out.println("Enter the book's edition: ");
         edition = sc1.nextLine();        
-        System.out.println("You entered: " + edition);
         System.out.println("Enter the book's publish year: ");
         publish_year = sc.nextInt();
-        System.out.println("You entered: " + publish_year);
+        sc.nextLine(); 
         request = "INSERT INTO Book (edition, publish_year) VALUES ('" + edition + "', '" + publish_year + "')";
         try {
             st = con.createStatement();
@@ -122,20 +121,24 @@ public class Ouvrage {
         // con = Connexion.getConnection();
         System.out.println("Enter the book's edition: ");
         edition = sc.nextLine();
+        // sc.nextLine();
         request = "SELECT * FROM Book WHERE edition = '" + edition + "'";
+        System.out.println("\n L'ouvrage :\n");
+        System.out.printf(format, "Ref", "Edition", "Année");
+        System.out.println("----------------------------------------------");
         try {
             st = con.createStatement();
             rs = st.executeQuery(request);
             if (rs.next()) {
                 found = true;
-                System.out.println("\nBook found:");
-                System.out.println("\nRef: " + rs.getInt("numeroOuvrage") + "\nEdition: " + rs.getString("edition") + "\nYear: " + rs.getInt("publish_year"));
-                // sc.nextLine();
+                System.out.printf(format,
+                    rs.getInt("numeroOuvrage"),
+                    rs.getString("edition"),
+                    rs.getInt("publish_year")
+                );
             } else {
                 System.out.println("Book not found.");
             }
-            // System.out.println("\nPress Enter to continue");
-            // sc.next();
             rs.close();
             // con.close();
         } catch (SQLException e) {
@@ -154,13 +157,16 @@ public class Ouvrage {
         // con = Connexion.getConnection();
         found = searchBook();
         if (found == null) {
-            // System.out.println("Book not found.");
+            System.out.println("Book not found.");
+            System.out.println("Press Enter to continue");
+            sc.nextLine();
             return;
         }
         System.out.println("Enter the new book's edition: ");
         edition = sc1.nextLine();
         System.out.println("Enter the new book's publish year: ");
         publish_year = sc.nextInt();
+        sc.nextLine();
         request = "UPDATE Book SET edition = '" + edition + "', publish_year = '" + publish_year + "' WHERE edition = '" + found + "'";
         try {
             st = con.createStatement();
@@ -179,7 +185,18 @@ public class Ouvrage {
         // con = Connexion.getConnection();
         found = searchBook();
         if (found == null) {
-            // System.out.println("Book not found.");
+            System.out.println("Book not found.");
+            System.out.println("Press Enter to continue");
+            sc.nextLine();
+            return;
+        }
+        System.out.println("Are you sure you want to delete the book with edition " + found + "? (y/n)");
+        String confirmation = sc.nextLine();
+        // sc.nextLine();
+        if (!confirmation.equals("y") && !confirmation.equals("Y")) {
+            System.out.println("Deletion cancelled.");
+            System.out.println("Press Enter to continue");
+            sc.nextLine();
             return;
         }
         request = "DELETE FROM Book WHERE edition = '" + found + "'";
